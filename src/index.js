@@ -6,23 +6,6 @@ This field has the type String!. The exclamation mark in the type definition mea
 never be null.
  */
 
-// const typeDefs = `
-// type Query {
-//     info: String!
-//     feed: [Link!]!
-// }
-//
-// type Mutation {
-//     post(url:String!, description: String!): Link!
-//     }
-//
-// type Link {
-//     id: ID!
-//     description: String!
-//     url: String!
-// }
-// `
-
 // hardcoded links for now
 let links = [{
     id: 'link-0',
@@ -44,12 +27,6 @@ const resolvers = {
         info: ()=> 'This is the HackerNewsCone API',
         feed: ()=> links
     },
-    // The Link resolver below is not needed because graphql infers what they look like
-    // Link: {
-    //     // parent obj is the element inside the links list 'resolved' in the above query execution
-    //     id: (parent) => parent.id,
-    //     description: (parent) => parent.url
-    // },
     Mutation: {
         post: (parent, args) => {
             const link = {
@@ -58,7 +35,19 @@ const resolvers = {
                 url: args.url
             }
             links.push(link)
+            console.log("Successfully created")
             return link
+        },
+        update: (parent, args) => {
+            const link = {
+                id: args.id,
+                description: args.description,
+                url: args.url
+            }
+            return links.splice(0, args.id, link)
+        },
+        delete: (parent, args) => {
+            return links.splice(0, args.id)
         }
     }
 }
