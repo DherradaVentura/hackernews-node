@@ -1,0 +1,22 @@
+// Prisma is an open source database toolkit that makes it easy for developers to reason about their data and how they
+// access it, by providing a clean and type-safe API for submitting database queries
+
+
+// 1
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// 2
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 3
+model Link {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  description String
+  url         String
+}
