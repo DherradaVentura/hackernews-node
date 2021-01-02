@@ -1,13 +1,13 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { APP_SECRET, getUserId } = require('../utils')
+const { getUserId } = require('../utils')
 
 async function signup (parent,args, context, info ) {
     const password = await bcrypt.hash(args.password, 10)
 
     const user = await context.prisma.user.create({ data: { ...args, password } })
 
-    const token = await jwt.sign({ userId: user.id}, APP_SECRET)
+    const token = await jwt.sign({ userId: user.id}, process.env.APP_SECRET)
 
     return {
         token,
@@ -24,8 +24,7 @@ async function login (parent,args, context, info ) {
     if(!isValid){
         throw new Error('Password is invalid')
     }
-
-    const token = await jwt.sign({ userId: user.id}, APP_SECRET)
+    const token = await jwt.sign({ userId: user.id}, process.env.APP_SECRET)
 
     return {
         token,

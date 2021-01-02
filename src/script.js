@@ -19,7 +19,7 @@ async function main() {
 // disconnect when done.
 main().catch(e => {
     throw e
-}).finally(async ()=> { await prisma.$disconnect() })
+    }).finally(async ()=> { await prisma.$disconnect() })
 
 // Workflow
 // Manually adjust your Prisma data model.
