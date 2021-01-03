@@ -12,6 +12,7 @@ const typeDefs = gql`
         delete(id: ID!): Successful
         signup(email: String!, password: String!, name: String!): AuthPayLoad
         login(email: String!, password: String!): AuthPayLoad
+        vote(linkId: ID!): Vote 
     }
 
     type AuthPayLoad {
@@ -31,10 +32,22 @@ const typeDefs = gql`
         description: String!
         url: String!
         postedBy: User
+        votes: [Vote!]!
     }
 
     type Successful {
         isSuccessful: Boolean
+    }
+    
+    type Vote {
+        id: ID!
+        link: Link!
+        user: User!
+    }
+    
+    type Subscription {
+        newLink: Link
+        newVote: Vote
     }
     `
 

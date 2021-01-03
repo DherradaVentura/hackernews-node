@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@prisma/cli": "^2.11.0",
-    "nodemon": "^2.0.6",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.6"
   }
 }

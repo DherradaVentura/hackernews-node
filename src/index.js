@@ -6,7 +6,9 @@ const Query = require('./resolvers/Query');
 const Mutation = require('./resolvers/Mutation');
 const Link = require('./resolvers/Link');
 const User = require('./resolvers/User');
-const {getUserId} = require('./utils')
+const Vote = require('./resolvers/Vote')
+const Subscription = require('./resolvers/Subscription');
+const { getUserId } = require('./utils');
 require('dotenv').config();
 
 const prisma = new PrismaClient();
@@ -14,9 +16,11 @@ const pubsub = new PubSub();
 
 const resolvers = {
     Query,
-    Mutation,
     Link,
-    User
+    Mutation,
+    User,
+    Vote,
+    Subscription
 }
 
 // Server
@@ -27,14 +31,14 @@ This tells the server what API operations are accepted and how they should be re
 const server = new ApolloServer({
     typeDefs:  schema,
     resolvers,
-    context: request => {
+    context: ({req}) => {
         return {
-            ...request,
+            ...req,
             prisma,
             pubsub,
-            userId: request && request.headers.authorization ? getUserId(request) : null
+            userId: req && req.headers.authorization ? getUserId(req) : null
         }
     }
 })
-server.listen().then(( { url } ) => console.log('Server is running on http://localhost:4000'));
+server.listen().then(( { url } ) => console.log(`Server is running on ${url}`));
 
