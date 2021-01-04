@@ -17,12 +17,15 @@ function feed (parent, args, context, info) {
 
     const count = context.prisma.link.count({ where })
 
-    return { links, count }
+    return {
+        id: 'main-feed',
+        links,
+        count
+    }
 }
 
 function info () {
     return 'This is a simple API for our hacker-news clone!'
 }
-
 
 module.exports = { feed, info }

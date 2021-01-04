@@ -3,7 +3,7 @@ const { gql } = require('apollo-server')
 const typeDefs = gql`
     type Query {
         info: String!
-        feed(filter: String, skip: Int, take: Int, orderBy: LinkOrderByInput): Feed
+        feed(filter: String, skip: Int, take: Int, orderBy: LinkOrderByInput): Feed!
     }
 
     type Mutation {
@@ -21,6 +21,7 @@ const typeDefs = gql`
     }
     
     type Feed {
+        id: ID!
         links: [Link!]!
         count: Int!
     }
