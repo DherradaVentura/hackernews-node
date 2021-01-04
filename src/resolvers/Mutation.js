@@ -46,8 +46,53 @@ async function post (parent, args, context, info) {
     return newLink
 }
 
-async function vote (parent, args, context, info) {
+async function update (parent, args, context, info) {
     const userId = getUserId(context)
+    const link = await context.prisma.link.findOne( {
+        where: {
+            id: Number(args.linkId)
+        }
+    })
+
+    if(!link){
+        throw Error(`A linkId: ${args.linkId} doesn't exist.`)
+    }
+
+    if(link.postedById !== userId) {
+        throw Error(`You cannot modify a link that you didn't post!`)
+    }
+
+    link.description = args.description
+
+    return link
+}
+
+async function deletePost (parent, args, context, info) {
+    const { userId } = context
+    const link = await context.prisma.link.findOne( {
+        where: {
+            id: Number(args.linkId)
+        }
+    })
+    if(!link){
+        throw Error(`Link ${args.linkId} doesn't exist.`)
+    }
+
+    if(link.postedById !== userId){
+        throw Error(`You cannot modify a link that you didn't post!`)
+    }
+
+    const isSuccessful = await context.prisma.link.delete({
+        where: {
+            id: Number(args.linkId)
+        }
+    }) ? true : false
+
+    return { isSuccessful }
+}
+
+async function vote (parent, args, context, info) {
+    const { userId } = context
 
     const vote = await context.prisma.vote.findOne({
         where: {
@@ -77,5 +122,7 @@ module.exports = {
     signup,
     login,
     post,
+    update,
+    deletePost,
     vote
 }

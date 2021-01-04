@@ -2,14 +2,14 @@ const { gql } = require('apollo-server')
 
 const typeDefs = gql`
     type Query {
-        feed: [Link!]!
-        link(id: ID!): Link
+        info: String!
+        feed(filter: String, skip: Int, take: Int, orderBy: LinkOrderByInput): Feed
     }
 
     type Mutation {
         post(url:String!, description: String!): Link!
-        update(id: ID!, url: String, description: String): Link
-        delete(id: ID!): Successful
+        update(linkId: ID!, url: String, description: String): Link
+        deletePost(linkId: ID!): Successful
         signup(email: String!, password: String!, name: String!): AuthPayLoad
         login(email: String!, password: String!): AuthPayLoad
         vote(linkId: ID!): Vote 
@@ -18,6 +18,11 @@ const typeDefs = gql`
     type AuthPayLoad {
         token: String!
         user: User
+    }
+    
+    type Feed {
+        links: [Link!]!
+        count: Int!
     }
 
     type User {
@@ -33,6 +38,7 @@ const typeDefs = gql`
         url: String!
         postedBy: User
         votes: [Vote!]!
+        createdAt: Date!
     }
 
     type Successful {
@@ -49,6 +55,19 @@ const typeDefs = gql`
         newLink: Link
         newVote: Vote
     }
+    
+    input LinkOrderByInput {
+        description: Sort
+        url: Sort
+        createdAt: Sort
+    }
+    
+    enum Sort {
+        asc
+        desc
+    }
+    
+    scalar Date
     `
 
 module.exports = typeDefs
