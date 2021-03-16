@@ -1,9 +1,9 @@
-function link (parent, args, context, info) {
-    return context.prisma.vote.findOne({ where: { id: parent.id } }).link()
+function link(parent, __, context, ____) {
+  return context.prisma.vote.findOne({ where: { id: parent.id } }).link();
 }
 
-function user (parent, args, context, info) {
-    return context.prisma.vote.findOne({ where: { id: parent.id } }).user()
+function user(parent, __, context, ____) {
+  return context.prisma.vote.findOne({ where: { id: parent.id } }).user();
 }
 
-module.exports = { link, user}
+export default { link, user };

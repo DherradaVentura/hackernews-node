@@ -1,27 +1,30 @@
-const { PrismaClient } = require('@prisma/client');
-const { ApolloServer } = require('apollo-server');
-const { PubSub } = require('apollo-server')
-const schema = require('./schema/schema');
-const Query = require('./resolvers/Query');
-const Mutation = require('./resolvers/Mutation');
-const Link = require('./resolvers/Link');
-const User = require('./resolvers/User');
-const Vote = require('./resolvers/Vote')
-const Subscription = require('./resolvers/Subscription');
-const { getUserId } = require('./utils');
-require('dotenv').config();
+import pkg from '@prisma/client';
+import { ApolloServer } from 'apollo-server';
+import { PubSub } from 'apollo-server';
+import typeDefs from './schema/schema.js';
+import * as Query from './resolvers/Query.js';
+import * as Mutation from './resolvers/Mutation.js';
+import * as Link from './resolvers/Link.js';
+import User from './resolvers/User.js';
+import Vote from './resolvers/Vote.js';
+import Subscription from './resolvers/Subscription.js';
+import { getUserId } from './utils.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const { PrismaClient } = pkg;
 
 const prisma = new PrismaClient();
 const pubsub = new PubSub();
 
 const resolvers = {
-    Query,
-    Link,
-    Mutation,
-    User,
-    Vote,
-    Subscription
-}
+  Query,
+  Link,
+  Mutation,
+  User,
+  Vote,
+  Subscription,
+};
 
 // Server
 /*
@@ -29,16 +32,15 @@ Finally, the schema and resolvers are bundled and passed to the GraphQLServer wh
 This tells the server what API operations are accepted and how they should be resolved.
  */
 const server = new ApolloServer({
-    typeDefs:  schema,
-    resolvers,
-    context: ({req}) => {
-        return {
-            ...req,
-            prisma,
-            pubsub,
-            userId: req && req.headers.authorization ? getUserId(req) : null
-        }
-    }
-})
-server.listen().then(( { url } ) => console.log(`Server is running on ${url}`));
-
+  typeDefs,
+  resolvers,
+  context: ({ req }) => {
+    return {
+      ...req,
+      prisma,
+      pubsub,
+      userId: req && req.headers.authorization ? getUserId(req) : null,
+    };
+  },
+});
+server.listen().then(({ url }) => console.log(`Server is running on ${url}`));

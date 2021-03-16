@@ -1,5 +1,5 @@
-function links (parent, args, context, info) {
-    return context.prisma.user.findOne({ where: { id: parent.id } }).links()
+function links(parent, __, context, ____) {
+  return context.prisma.user.findOne({ where: { id: parent.id } }).links();
 }
 
-module.exports = { links }
+export default { links };

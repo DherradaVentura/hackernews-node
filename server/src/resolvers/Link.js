@@ -1,9 +1,9 @@
-function postedBy (parent, args, context, info) {
-    return context.prisma.link.findOne({ where: { id: parent.id} }).postedBy()
+function postedBy(parent, __, context, ____) {
+  return context.prisma.link.findOne({ where: { id: parent.id } }).postedBy();
 }
 
-function votes ( parent, args, context, info) {
-    return context.prisma.link.findOne({ where: { id: parent.id } }).votes()
+function votes(parent, __, context, ____) {
+  return context.prisma.link.findOne({ where: { id: parent.id } }).votes();
 }
 
-module.exports = { postedBy, votes }
+export { postedBy, votes };

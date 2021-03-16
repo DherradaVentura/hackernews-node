@@ -1,5 +1,5 @@
 // Import the PrismaClient constructor from the @prisma/client node module.
-const { PrismaClient } = require('@prisma/client')
+import { PrismaClient } from '@prisma/client'
 
 // Instantiate PrismaClient
 const prisma = new PrismaClient()

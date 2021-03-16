@@ -1,23 +1,23 @@
-function newLinkSubscribe (parent, args, context, info){
-    return context.pubsub.asyncIterator("NEW_LINK")
+function newLinkSubscribe(_, __, context, ____) {
+  return context.pubsub.asyncIterator('NEW_LINK');
 }
 
 const newLink = {
-    subscribe: newLinkSubscribe,
-    resolve: payload => {
-        return payload
-    }
-}
+  subscribe: newLinkSubscribe,
+  resolve: (payload) => {
+    return payload;
+  },
+};
 
-function newVoteSubscribe (parent, args, context, info){
-    return context.pubsub.asyncIterator("NEW_VOTE")
+function newVoteSubscribe(_, __, context, ____) {
+  return context.pubsub.asyncIterator('NEW_VOTE');
 }
 
 const newVote = {
-    subscribe: newVoteSubscribe,
-    resolve: payload => {
-        return payload
-    }
-}
+  subscribe: newVoteSubscribe,
+  resolve: (payload) => {
+    return payload;
+  },
+};
 
-module.exports = { newLink, newVote }
+export default { newLink, newVote };
