@@ -20,4 +20,4 @@ const newVote = {
   },
 };
 
-export default { newLink, newVote };
+export { newLink, newVote };

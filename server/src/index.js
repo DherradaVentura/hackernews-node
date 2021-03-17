@@ -1,18 +1,17 @@
 import pkg from '@prisma/client';
 import { ApolloServer } from 'apollo-server';
 import { PubSub } from 'apollo-server';
-import typeDefs from './schema/schema.js';
+import typeDefs from './schema.js';
 import * as Query from './resolvers/Query.js';
 import * as Mutation from './resolvers/Mutation.js';
 import * as Link from './resolvers/Link.js';
 import User from './resolvers/User.js';
-import Vote from './resolvers/Vote.js';
-import Subscription from './resolvers/Subscription.js';
+import * as Vote from './resolvers/Vote.js';
+import * as Subscription from './resolvers/Subscription.js';
 import { getUserId } from './utils.js';
 import dotenv from 'dotenv';
-dotenv.config();
-
 const { PrismaClient } = pkg;
+dotenv.config();
 
 const prisma = new PrismaClient();
 const pubsub = new PubSub();
