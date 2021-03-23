@@ -39,7 +39,7 @@ async function login(_, args, context, ____) {
   };
 }
 
-async function post(parent, args, context, info) {
+async function post(_, args, context, ____) {
   const userId = getUserId(context);
 
   const newLink = await context.prisma.link.create({
@@ -53,7 +53,7 @@ async function post(parent, args, context, info) {
   return newLink;
 }
 
-async function update(parent, args, context, info) {
+async function update(_, args, context, ____) {
   const userId = getUserId(context);
   const link = await context.prisma.link.findOne({
     where: {
@@ -74,7 +74,7 @@ async function update(parent, args, context, info) {
   return link;
 }
 
-async function deletePost(parent, args, context, info) {
+async function deletePost(_, args, context, ____) {
   const { userId } = context;
   const link = await context.prisma.link.findOne({
     where: {
@@ -100,7 +100,7 @@ async function deletePost(parent, args, context, info) {
   return { isSuccessful };
 }
 
-async function vote(parent, args, context, info) {
+async function vote(_, args, context, ____) {
   const { userId } = context;
 
   const vote = await context.prisma.vote.findOne({
